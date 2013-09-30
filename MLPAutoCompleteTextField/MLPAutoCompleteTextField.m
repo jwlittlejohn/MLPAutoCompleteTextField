@@ -437,6 +437,18 @@ withAutoCompleteString:(NSString *)string
         }
         
         [self.superview bringSubviewToFront:self];
+
+        // jwlittlejohn - start changes: See if a different super view should be used
+        if (self.autoCompleteTableSuperView) {
+            [self.autoCompleteTableSuperView insertSubview:self.autoCompleteTableView
+                                              belowSubview:self];
+        } else {
+            [self.self.superview insertSubview:self.autoCompleteTableView
+                                              belowSubview:self];
+        }
+
+        // jwlittlejohn - end changes
+
         [self.superview insertSubview:self.autoCompleteTableView
                          belowSubview:self];
         [self.autoCompleteTableView setUserInteractionEnabled:YES];
@@ -780,6 +792,13 @@ withAutoCompleteString:(NSString *)string
 + (CGRect)autoCompleteTableViewFrameForTextField:(MLPAutoCompleteTextField *)textField
 {
     CGRect frame = textField.frame;
+
+    // jwlittlejohn - start of changes: adjust the position relative to the superview if required
+    if(textField.autoCompleteTableSuperView) {
+        frame = [textField convertRect:textField.bounds toView:textField.autoCompleteTableSuperView];
+    }
+    // jwlittlejohn - end of changes
+
     frame.origin.y += textField.frame.size.height;
     frame.origin.x += textField.autoCompleteTableOriginOffset.width;
     frame.origin.y += textField.autoCompleteTableOriginOffset.height;

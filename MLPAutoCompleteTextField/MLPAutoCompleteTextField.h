@@ -28,6 +28,7 @@
 
 @interface MLPAutoCompleteTextField : UITextField <UITableViewDataSource, UITableViewDelegate, MLPAutoCompleteSortOperationDelegate, MLPAutoCompleteFetchOperationDelegate>
 
+@property (strong, retain) UIView *autoCompleteTableSuperView;  // jwlittlejohn - added property
 @property (strong, readonly) UITableView *autoCompleteTableView;
 
 @property (strong) IBOutlet id <MLPAutoCompleteTextFieldDataSource> autoCompleteDataSource;
