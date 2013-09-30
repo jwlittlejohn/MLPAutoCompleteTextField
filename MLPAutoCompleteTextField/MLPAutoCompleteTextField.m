@@ -295,9 +295,12 @@ withAutoCompleteString:(NSString *)string
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(!self.autoCompleteTableAppearsAsKeyboardAccessory){
-        [self closeAutoCompleteTableView];
-    }
+    // jwlittlejohn - start changes: Leave the suggestions table present after keyboard disappears
+//    if(!self.autoCompleteTableAppearsAsKeyboardAccessory){
+//        [self closeAutoCompleteTableView];
+//    }
+    // jwlittlejohn - end changes
+
     
     UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
     NSString *autoCompleteString = selectedCell.textLabel.text;
@@ -383,10 +386,12 @@ withAutoCompleteString:(NSString *)string
 
 - (BOOL)resignFirstResponder
 {
-    [self restoreOriginalShadowProperties];
-    if(!self.autoCompleteTableAppearsAsKeyboardAccessory){
-        [self closeAutoCompleteTableView];
-    }
+    // jwlittlejohn - start changes: Leave the suggestions table present after keyboard disappears
+//    [self restoreOriginalShadowProperties];
+//    if(!self.autoCompleteTableAppearsAsKeyboardAccessory){
+//        [self closeAutoCompleteTableView];
+//    }
+    // jwlittlejohn - end changes
     return [super resignFirstResponder];
 }
 
@@ -438,7 +443,7 @@ withAutoCompleteString:(NSString *)string
         
         [self.superview bringSubviewToFront:self];
 
-        // jwlittlejohn - start changes: See if a different super view should be used
+         // jwlittlejohn - start changes: See if a different super view should be used
         if (self.autoCompleteTableSuperView) {
             [self.autoCompleteTableSuperView insertSubview:self.autoCompleteTableView
                                               belowSubview:self];
@@ -446,11 +451,8 @@ withAutoCompleteString:(NSString *)string
             [self.self.superview insertSubview:self.autoCompleteTableView
                                               belowSubview:self];
         }
-
         // jwlittlejohn - end changes
 
-        [self.superview insertSubview:self.autoCompleteTableView
-                         belowSubview:self];
         [self.autoCompleteTableView setUserInteractionEnabled:YES];
         if(self.showTextFieldDropShadowWhenAutoCompleteTableIsOpen){
             [self.layer setShadowColor:[[UIColor blackColor] CGColor]];
