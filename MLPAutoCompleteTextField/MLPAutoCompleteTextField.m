@@ -300,7 +300,6 @@ withAutoCompleteString:(NSString *)string
 //        [self closeAutoCompleteTableView];
 //    }
     // jwlittlejohn - end changes
-
     
     UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
     NSString *autoCompleteString = selectedCell.textLabel.text;
@@ -443,7 +442,7 @@ withAutoCompleteString:(NSString *)string
         
         [self.superview bringSubviewToFront:self];
 
-         // jwlittlejohn - start changes: See if a different super view should be used
+        // jwlittlejohn - start changes: See if a different super view should be used
         if (self.autoCompleteTableSuperView) {
             [self.autoCompleteTableSuperView insertSubview:self.autoCompleteTableView
                                               belowSubview:self];
@@ -452,7 +451,7 @@ withAutoCompleteString:(NSString *)string
                                               belowSubview:self];
         }
         // jwlittlejohn - end changes
-
+        
         [self.autoCompleteTableView setUserInteractionEnabled:YES];
         if(self.showTextFieldDropShadowWhenAutoCompleteTableIsOpen){
             [self.layer setShadowColor:[[UIColor blackColor] CGColor]];
@@ -755,7 +754,11 @@ withAutoCompleteString:(NSString *)string
     [newTableView setDelegate:textField];
     [newTableView setDataSource:textField];
     [newTableView setScrollEnabled:YES];
-    [newTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    
+    // jwlittlejohn - start of changes: add a seperator line and change colour
+    [newTableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+    [newTableView setSeparatorColor:[UIColor colorWithRed:223 green:224 blue:225 alpha:1.0f]];
+    // jwlittlejohn - end
     
     return newTableView;
 }
